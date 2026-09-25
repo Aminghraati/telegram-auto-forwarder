@@ -1,3 +1,7 @@
 python-telegram-bot>=20.0
 Telethon>=1.36.0
 python-socks[asyncio]>=2.0.0
+qrcode[pil]>=7.0
+# فقط برای روش تبدیل tdata (اختیاری):
+# opentele
+# PyQt5

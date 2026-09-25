@@ -141,6 +141,25 @@ async def qr_login():
         try:
             img = qrcode.make(url)
             img.save("login_qr.png")
+            # ساخت صفحه HTML زنده برای پنل Preview (هر ۵ ثانیه خودش تازه می‌شود)
+            import base64
+            with open("login_qr.png", "rb") as _f:
+                _b64 = base64.b64encode(_f.read()).decode()
+            with open("login_qr.html", "w", encoding="utf-8") as _f:
+                _f.write(
+                    '<!DOCTYPE html><html><head><meta charset="utf-8">'
+                    '<meta http-equiv="refresh" content="5">'
+                    '<title>Telegram QR Login</title></head>'
+                    '<body style="background:#fff;display:flex;flex-direction:column;'
+                    'align-items:center;justify-content:center;height:100vh;'
+                    'font-family:Arial;margin:0">'
+                    '<h2 style="color:#229ED9;margin:10px">📱 Telegram QR Login</h2>'
+                    '<p style="color:#333;margin:5px">تلگرام گوشی ← تنظیمات ← دستگاه‌ها ← اتصال دستگاه دسکتاپ</p>'
+                    f'<img src="data:image/png;base64,{_b64}" '
+                    'style="width:420px;height:420px;image-rendering:pixelated;margin:10px">'
+                    '<p style="color:#888;margin:5px">این کد زنده تازه می‌شود — اگر خوانده نیست چند ثانیه صبر کن</p>'
+                    '</body></html>'
+                )
             # باز کردن خودکار QR در تصویربردار ویندوز برای اسکن راحت
             os.startfile(os.path.abspath("login_qr.png"))
         except Exception:
@@ -154,7 +173,7 @@ async def qr_login():
     print("   (Settings → Devices → Link Desktop Device)")
     print("→ کد QR (فایل login_qr.png یا همین ترمینال) را با تلگرام گوشی اسکن کن")
 
-    timeout = 120  # ثانیه
+    timeout = 600  # ثانیه — ۱۰ دقیقه فرصت اسکن (توکن هر ~۳۰ ثانیه خودکار تازه می‌شود)
     start = time.time()
     while user is not None and time.time() - start < timeout:
         try:

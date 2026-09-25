@@ -10,6 +10,21 @@
 login_qr.png
 login_qr*.png
 
+# tdata تلگرام دسکتاپ (حاوی کلیدهای کامل اکانت است!)
+tdata/
+tdata_copy/
+tdata_backup/
+
+# بکاپ‌ها و نسخه‌های قدیمی سشن
+*.session.bak*
+*.session.old
+*.session.old.*
+converted_session*
+
+# فایل‌های موقت QR و دیباگ tdata
+login_qr.html
+map_parts.pkl
+
 # حالت لاگین دو مرحله‌ای
 login_state.txt
 
